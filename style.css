@@ -2,4 +2,22 @@ canvas {
   position: fixed;
   top: 0;
   left: 0;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+#button0 {
+  width: 100px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: background-color 0.3s ease;
+}
+
+#button0:hover {
+  background-color: transparent;
 }
