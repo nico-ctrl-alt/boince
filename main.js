@@ -9,7 +9,6 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth/ window.innerHe
 const renderer = new THREE.WebGLRenderer({canvas: document.querySelector('#bg'),});
 
 renderer.setPixelRatio(.2);
-renderer.setRenderTargetFramebuffer
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.setZ(30);
@@ -17,8 +16,10 @@ camera.position.setZ(30);
 renderer.render(scene, camera);
 
 const icogeo = new THREE.IcosahedronGeometry(5, 3, 16, 100);
-const material = new THREE.MeshToonMaterial( {color: 0x00ff00 });;
+const icosmaterial = new THREE.MeshToonMaterial( {color: 0x00ff00 });
 const icos = new THREE.Mesh(icogeo, material);
+let icoshover = false;
+let icosscalex = 5;
 
 scene.add(icos);
 
@@ -35,18 +36,27 @@ light1.target.position.set(-5, 0, 0);
 scene.add(light1);
 scene.add(light1.target);
 
-const tomainmenu = false;
+let tomainmenu = false;
 let timer = 0;
-const scenetransition = 0;
+let sceneint = 0;
 
 function animate() {
   requestAnimationFrame(animate);
 
   icos.rotation.x += .01;
+  if(icoshover == true)
+  {
+    icos.position.set(icos.getWorldPosition().x, icos.getWorldPosition().y, smoothvalue(icos.getWorldPosition().z, 1, 10));
+  }
+  else
+  {
+    icos.position.set(icos.getWorldPosition().x, icos.getWorldPosition().y, smoothvalue(icos.getWorldPosition().z, -1, 0));
+  }
+
 
   renderer.render(scene, camera);
 
-  if(timer > 0 && scenetransition == 0)
+  if(timer > 0 && sceneint == 0)
   {
     timer -= 1;
     if(timer > 200)
@@ -69,5 +79,21 @@ animate();
 const button0 = document.getElementById('button0');
 button0.addEventListener('click', () => {change0();});
 button0.addEventListener('hover', () => {hover0();});
+
+function change0()
+{  sceneint = 0; timer = 300; }
+
+function hover0()
+{  
+
+}
+
+const smoothvalue = function (value, speed, gotovalue)
+{
+  if(value != gotovalue)
+  {
+    value += speed;
+  }
+}
 
 
