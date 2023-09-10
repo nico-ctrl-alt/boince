@@ -4,6 +4,8 @@ canvas {
   left: 0;
   image-rendering: -moz-crisp-edges;
   image-rendering: -webkit-crisp-edges;
+  justify-content: center;
+  align-items: center;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
 }

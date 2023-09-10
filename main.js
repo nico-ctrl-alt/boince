@@ -17,8 +17,8 @@ renderer.render(scene, camera);
 
 const icogeo = new THREE.IcosahedronGeometry(5, 3, 16, 100);
 const icosmaterial = new THREE.MeshToonMaterial( {color: 0x00ff00 });
-const icos = new THREE.Mesh(icogeo, material);
-let icoshover = false;
+const icos = new THREE.Mesh(icogeo, icosmaterial);
+let icoshover = 0;
 let icosscalex = 5;
 
 scene.add(icos);
@@ -36,64 +36,69 @@ light1.target.position.set(-5, 0, 0);
 scene.add(light1);
 scene.add(light1.target);
 
-let tomainmenu = false;
 let timer = 0;
 let sceneint = 0;
+
+const smoothvalue = function (value, targetValue, damping) {
+  const diff = (targetValue - value)/damping;
+  return value + diff;
+}
+
+function scene0()
+{
+  icos.rotation.x += .01;
+
+  if(icos.position.z != icoshover)
+   icos.position.set(icos.position.x, icos.position.y, smoothvalue(icos.position.z, icoshover, 50));
+
+  if(timer > 0)
+  {
+    timer -= 5;
+    if(timer > 200)
+    {
+      icoshover = 0;
+      icos.position.set(8,10,icos.position.z);
+    }
+    if(timer > 100 && timer < 200)
+    {
+      icoshover = 10;
+      icos.position.set(-8,-10,icos.position.z);
+    }
+    if(timer > 0 && timer < 100)
+    {
+      icoshover = 20;
+      icos.position.set(0,-2,icos.position.z);
+    }
+    if(timer < 1)
+    sceneint = 1;
+  }
+}
 
 function animate() {
   requestAnimationFrame(animate);
 
-  icos.rotation.x += .01;
-  if(icoshover == true)
-  {
-    icos.position.set(icos.getWorldPosition().x, icos.getWorldPosition().y, smoothvalue(icos.getWorldPosition().z, 1, 10));
-  }
-  else
-  {
-    icos.position.set(icos.getWorldPosition().x, icos.getWorldPosition().y, smoothvalue(icos.getWorldPosition().z, -1, 0));
-  }
-
-
   renderer.render(scene, camera);
 
-  if(timer > 0 && sceneint == 0)
-  {
-    timer -= 1;
-    if(timer > 200)
-    {
-      icos.position.set(8,10,0);
-    }
-    if(timer > 100 && timer < 200)
-    {
-      icos.position.set(-4,-10,10);
-    }
-    if(timer > 0 && timer < 100)
-    {
-      icos.position.set(0,-2,20);
-    }
-  }
+  if(sceneint == 0)
+  scene0();
 }
 
 animate();
 
 const button0 = document.getElementById('button0');
 button0.addEventListener('click', () => {change0();});
-button0.addEventListener('hover', () => {hover0();});
 
 function change0()
-{  sceneint = 0; timer = 300; }
+{  sceneint = 0; timer = 300; console.log('change0 function called'); }
 
-function hover0()
-{  
+button0.addEventListener('mouseover', () => {
+  icoshover = 10;
+  console.log('hovering');
+});
 
-}
-
-const smoothvalue = function (value, speed, gotovalue)
-{
-  if(value != gotovalue)
-  {
-    value += speed;
-  }
-}
+button0.addEventListener('mouseout', () => {
+  icoshover = 0;
+  console.log('nah');
+});
 
 
