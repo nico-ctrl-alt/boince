@@ -101,21 +101,24 @@ function scene0()
     timer -= 5;
     if(timer > 200)
     {
-      icoshover = 100;
+      icoshover = 50;
       icos.position.set(8,10,icos.position.z);
     }
     if(timer > 100 && timer < 200)
     {
-      icoshover = 200;
+      icoshover = -100;
       icos.position.set(-8,-10,icos.position.z);
     }
     if(timer > 0 && timer < 100)
     {
-      icoshover = 1000;
-      icos.position.set(0,-2,icos.position.z);
+      icoshover = 250;
+      icos.position.set(0,0,icos.position.z);
     }
     if(timer < 1)
-    sceneint = 1;
+    {
+      desiredColor = new THREE.Color('green');
+      sceneint = 1;
+    }
   }
 }
 
@@ -147,7 +150,9 @@ const button0 = document.getElementById('button0');
 button0.addEventListener('click', () => {change0();});
 
 function change0()
-{  sceneint = 0; timer = 300; console.log('change0 function called'); }
+{ timer = 300; console.log('change0 function called'); 
+button0.style.visibility = 'hidden';
+}
 
 button0.addEventListener('mouseover', () => {
   icoshover = 10;
