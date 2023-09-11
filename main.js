@@ -23,13 +23,8 @@ let icosscalex = 5;
 
 scene.add(icos);
 
-const color = 0xFFFFFF;
-const intensity = 1;
-const light = new THREE.AmbientLight(color, intensity);
-scene.add(light);
-
 const color1 = 0xFFFFFF;
-const intensity1 = 1;
+const intensity1 = 2;
 const light1 = new THREE.DirectionalLight(color1, intensity1);
 light1.position.set(0, 10, 0);
 light1.target.position.set(-5, 0, 0);
@@ -70,14 +65,6 @@ const smoothvaluevec3 = function(value, targetValue, damping)
   return smoothedValue;
 }
 
-// Example usage:
-const inputValues = [5, 10, 15, 20];
-const targetValue = 20;
-const damping = 10;
-
-const smoothedResult = smoothvaluelist(inputValues, targetValue, damping);
-console.log(smoothedResult);
-
 function scene0()
 {
   icos.rotation.x += .01;
@@ -108,6 +95,11 @@ function scene0()
   }
 }
 
+function scene1()
+{
+  
+}
+
 function animate() {
   requestAnimationFrame(animate);
 
@@ -116,7 +108,8 @@ function animate() {
   if(sceneint == 0)
   scene0();
 
-  
+  if(sceneint == 1)
+  scene1();
 }
 
 animate();
