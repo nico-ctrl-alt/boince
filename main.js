@@ -9,12 +9,12 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth/ window.innerHe
 const renderer = new THREE.WebGLRenderer({canvas: document.querySelector('#bg'),});
 
 renderer.setPixelRatio(.2);
-
 renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.setZ(30);
 
 renderer.render(scene, camera);
-
+scene.background = new THREE.Color(1,1,1,1);
+let desiredColor = new THREE.Color(0,0,0,0);
 const icogeo = new THREE.IcosahedronGeometry(5, 3, 16, 100);
 const icosmaterial = new THREE.MeshToonMaterial( {color: 0x00ff00 });
 const icos = new THREE.Mesh(icogeo, icosmaterial);
@@ -65,6 +65,30 @@ const smoothvaluevec3 = function(value, targetValue, damping)
   return smoothedValue;
 }
 
+const smoothvaluevec4 = function(value, targetValue, damping)
+{
+  const diffx = (targetValue.x - value.x)/damping; 
+  const diffy = (targetValue.y - value.y)/damping; 
+  const diffz = (targetValue.z - value.z)/damping; 
+  const diffw = (targetValue.w - value.w)/damping; 
+
+  const smoothedValue = new THREE.Vector4(value.x + diffx, value.y + diffy, value.z + diffz, value.w + diffw);
+
+  return smoothedValue;
+}
+
+const smoothvaluecolor = function(value, targetValue, damping)
+{
+  const diffx = (targetValue.r - value.r)/damping; 
+  const diffy = (targetValue.g - value.g)/damping; 
+  const diffz = (targetValue.b - value.b)/damping; 
+  const diffw = (targetValue.a - value.a)/damping; 
+
+  const smoothedValue = new THREE.Color(value.r + diffx, value.g + diffy, value.b + diffz, value.a + diffw);
+
+  return smoothedValue;
+}
+
 function scene0()
 {
   icos.rotation.x += .01;
@@ -77,17 +101,17 @@ function scene0()
     timer -= 5;
     if(timer > 200)
     {
-      icoshover = 0;
+      icoshover = 100;
       icos.position.set(8,10,icos.position.z);
     }
     if(timer > 100 && timer < 200)
     {
-      icoshover = 10;
+      icoshover = 200;
       icos.position.set(-8,-10,icos.position.z);
     }
     if(timer > 0 && timer < 100)
     {
-      icoshover = 20;
+      icoshover = 1000;
       icos.position.set(0,-2,icos.position.z);
     }
     if(timer < 1)
@@ -97,13 +121,18 @@ function scene0()
 
 function scene1()
 {
-  
+
 }
 
 function animate() {
   requestAnimationFrame(animate);
 
   renderer.render(scene, camera);
+
+  if(scene.background != desiredColor)
+  {
+    scene.background = smoothvaluecolor(scene.background, desiredColor, 20);
+  }
 
   if(sceneint == 0)
   scene0();
