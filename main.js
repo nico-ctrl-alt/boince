@@ -44,6 +44,40 @@ const smoothvalue = function (value, targetValue, damping) {
   return value + diff;
 }
 
+const smoothvaluelist = function (values, targetValue, damping) {
+  const smoothedValues = [];
+
+  for (let i = 0; i < values.length; i++) {
+    const value = values[i];
+
+    const diff = (targetValue[i] - value) / damping;
+    const smoothedValue = value + diff;
+
+    smoothedValues.push(smoothedValue);
+  }
+
+  return smoothedValues;
+};
+
+const smoothvaluevec3 = function(value, targetValue, damping)
+{
+  const diffx = (targetValue.x - value.x)/damping; 
+  const diffy = (targetValue.y - value.y)/damping; 
+  const diffz = (targetValue.z - value.z)/damping; 
+
+  const smoothedValue = new THREE.Vector3(value.x + diffx, value.y + diffy, value.z + diffz);
+
+  return smoothedValue;
+}
+
+// Example usage:
+const inputValues = [5, 10, 15, 20];
+const targetValue = 20;
+const damping = 10;
+
+const smoothedResult = smoothvaluelist(inputValues, targetValue, damping);
+console.log(smoothedResult);
+
 function scene0()
 {
   icos.rotation.x += .01;
@@ -81,6 +115,8 @@ function animate() {
 
   if(sceneint == 0)
   scene0();
+
+  
 }
 
 animate();
