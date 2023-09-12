@@ -23,18 +23,39 @@ let icoshover = 0;
 scene.add(icos);
 
 const video = document.getElementById('video');
-const img = document.getElementById('tv');
+const tv = document.getElementById('tv');
+const play = document.getElementById('play');
+const ff = document.getElementById('ff');
+const reverse = document.getElementById('reverse');
 
 const videotex = new THREE.VideoTexture( video );
 videotex.colorSpace = THREE.SRGBColorSpace;
 videotex.minFilter = THREE.NearestFilter;
 videotex.magFilter = THREE.NearestFilter;
 
-const tvtex = new THREE.Texture(img);
+const tvtex = new THREE.Texture(tv);
 tvtex.needsUpdate = true;
 tvtex.minFilter = THREE.NearestFilter;
 tvtex.magFilter = THREE.NearestFilter;
 tvtex.colorSpace = THREE.SRGBColorSpace;
+
+const playtex = new THREE.Texture(play);
+playtex.needsUpdate = true;
+playtex.minFilter = THREE.NearestFilter;
+playtex.magFilter = THREE.NearestFilter;
+playtex.colorSpace = THREE.SRGBColorSpace;
+
+const fftex = new THREE.Texture(ff);
+fftex.needsUpdate = true;
+fftex.minFilter = THREE.NearestFilter;
+fftex.magFilter = THREE.NearestFilter;
+fftex.colorSpace = THREE.SRGBColorSpace;
+
+const reversetex = new THREE.Texture(reverse);
+reversetex.needsUpdate = true;
+reversetex.minFilter = THREE.NearestFilter;
+reversetex.magFilter = THREE.NearestFilter;
+reversetex.colorSpace = THREE.SRGBColorSpace;
 
 const planegeo = new THREE.PlaneGeometry(4.5, 4, 1, 1);
 
@@ -49,10 +70,14 @@ const tvmat = new THREE.MeshBasicMaterial({color: 0xFFFFFF, map: tvtex, alphaTes
 const tvplane = new THREE.Mesh(tvgeo, tvmat);
 tvplane.position.set(0,-110,-100);
 
+const playmat = new THREE.MeshBasicMaterial({color: 0xFFFFFF, map: playtex, alphaTest: .5, transparent: true});
+const ffmat = new THREE.MeshBasicMaterial({color: 0xFFFFFF, map: fftex, alphaTest: .5, transparent: true});
+const reversemat = new THREE.MeshBasicMaterial({color: 0xFFFFFF, map: reversetex, alphaTest: .5, transparent: true});
+
 const playgeo = new THREE.PlaneGeometry(1,1);
-const playbutton = new THREE.Mesh(playgeo);
-const ffbutton = new THREE.Mesh(playgeo.clone());
-const reversebutton = new THREE.Mesh(playgeo.clone());
+const playbutton = new THREE.Mesh(playgeo, playmat);
+const ffbutton = new THREE.Mesh(playgeo.clone(), ffmat);
+const reversebutton = new THREE.Mesh(playgeo.clone(), reversemat);
 
 scene.add(videoplane, tvplane, playbutton, ffbutton, reversebutton);
 
@@ -163,6 +188,9 @@ function scene1()
         const smoothpos = smoothvaluevec3(videoplane.position, desiredplanepos, 10);
         videoplane.position.set(smoothpos.x, smoothpos.y, smoothpos.z);
         tvplane.position.set(smoothpos.x, smoothpos.y, smoothpos.z);
+        playbutton.position.set(smoothpos.x, smoothpos.y - 5, smoothpos.z);
+        ffbutton.position.set(smoothpos.x + 5, smoothpos.y - 5, smoothpos.z);
+        reversebutton.position.set(smoothpos.x - 5, smoothpos.y - 5, smoothpos.z);
     }
 }
 
