@@ -23,18 +23,30 @@ let icoshover = 0;
 scene.add(icos);
 
 const video = document.getElementById('video');
-video.preload = 'auto'; // Preload the video
+video.preload = 'auto';
+const img = document.getElementById('tv');
 
 const texture = new THREE.VideoTexture( video );
 texture.colorSpace = THREE.SRGBColorSpace;
 
-const planegeo = new THREE.PlaneGeometry(5, 3.5, 1, 1);
+const tvtex = new THREE.Texture(img);
+tvtex.needsUpdate = true;
+tvtex.minFilter = THREE.NearestFilter;
+tvtex.colorSpace = THREE.SRGBColorSpace;
 
-const planematerial = new THREE.MeshBasicMaterial({color: 0xFFFFFF, map: texture });
+const planegeo = new THREE.PlaneGeometry(4.5, 4, 1, 1);
+
+const planematerial = new THREE.MeshBasicMaterial({color: 0xFFFFFF, map: texture});
 const videoplane = new THREE.Mesh(planegeo, planematerial);
 let desiredplanepos = new THREE.Vector3(0,0,0);
 
-scene.add(videoplane);
+const tvgeo = new THREE.PlaneGeometry(7, 7, 1, 1);
+
+const tvmat = new THREE.MeshBasicMaterial({color: 0xFFFFFF, map: tvtex, alphaTest: .5, transparent: true});
+const tvplane = new THREE.Mesh(tvgeo, tvmat);
+let desiredtvpos = new THREE.Vector3(0,0,0);
+
+scene.add(videoplane, tvplane);
 
 const color1 = 0xFFFFFF;
 const intensity1 = 2;
@@ -142,6 +154,7 @@ function scene1()
     {
         const smoothpos = smoothvaluevec3(videoplane.position, desiredplanepos, 10);
         videoplane.position.set(smoothpos.x, smoothpos.y, smoothpos.z);
+        tvplane.position.set(smoothpos.x, smoothpos.y, smoothpos.z);
     }
 }
 
