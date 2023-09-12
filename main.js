@@ -15,11 +15,10 @@ camera.position.setZ(30);
 renderer.render(scene, camera);
 scene.background = new THREE.Color(1,1,1,1);
 let desiredColor = new THREE.Color(0,0,0,0);
-const icogeo = new THREE.IcosahedronGeometry(5, 3, 16, 100);
+const icogeo = new THREE.IcosahedronGeometry(5, 1, 16, 100);
 const icosmaterial = new THREE.MeshToonMaterial( {color: 0x00ff00 });
 const icos = new THREE.Mesh(icogeo, icosmaterial);
 let icoshover = 0;
-let icosscalex = 5;
 
 scene.add(icos);
 
