@@ -28,10 +28,13 @@ const img = document.getElementById('tv');
 
 const texture = new THREE.VideoTexture( video );
 texture.colorSpace = THREE.SRGBColorSpace;
+texture.minFilter = THREE.NearestFilter;
+texture.magFilter = THREE.NearestFilter;
 
 const tvtex = new THREE.Texture(img);
 tvtex.needsUpdate = true;
 tvtex.minFilter = THREE.NearestFilter;
+tvtex.magFilter = THREE.NearestFilter;
 tvtex.colorSpace = THREE.SRGBColorSpace;
 
 const planegeo = new THREE.PlaneGeometry(4.5, 4, 1, 1);
@@ -45,6 +48,11 @@ const tvgeo = new THREE.PlaneGeometry(7, 7, 1, 1);
 const tvmat = new THREE.MeshBasicMaterial({color: 0xFFFFFF, map: tvtex, alphaTest: .5, transparent: true});
 const tvplane = new THREE.Mesh(tvgeo, tvmat);
 let desiredtvpos = new THREE.Vector3(0,0,0);
+
+const playgeo = new THREE.PlaneGeometry(1,1);
+const playbutton = new THREE.Mesh(playgeo);
+const ffbutton = new THREE.Mesh(playgeo.clone());
+const reversebutton = new THREE.Mesh(playgeo.clone());
 
 scene.add(videoplane, tvplane);
 

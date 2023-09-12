@@ -23,6 +23,14 @@ canvas {
   transform: translate(-50%, -50%); /* Center the button perfectly */
   transition: background-color 0.3s ease;
 }
+
+img {
+  image-rendering: auto;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+
+  /* Safari seems to support, but seems deprecated and does the same thing as the others. */
+  image-rendering: -webkit-optimize-contrast;
 }
 
 #button0:hover {
