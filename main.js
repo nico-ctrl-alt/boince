@@ -8,7 +8,7 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth/ window.innerHe
 
 const renderer = new THREE.WebGLRenderer({canvas: document.querySelector('#bg'),});
 
-renderer.setPixelRatio(.2);
+renderer.setPixelRatio();
 renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.setZ(30);
 
@@ -21,6 +21,25 @@ const icos = new THREE.Mesh(icogeo, icosmaterial);
 let icoshover = 0;
 
 scene.add(icos);
+
+video = document.getElementById( 'video' );
+				video.play();
+				video.addEventListener( 'play', function () {
+
+					this.currentTime = 3;
+
+				} );
+
+				texture = new THREE.VideoTexture( video );
+				texture.colorSpace = THREE.SRGBColorSpace;
+
+const planegeo = new THREE.PlaneGeometry(5, 2.5, 1, 1);
+
+const planematerial = new THREE.MeshBasicMaterial({color: 0xFFFFFF, map: texture });
+const videoplane = new THREE.Mesh(planegeo, planematerial);
+let desiredplanepos = new THREE.Vector3(0,0,0);
+
+scene.add(videoplane);
 
 const color1 = 0xFFFFFF;
 const intensity1 = 2;
@@ -123,7 +142,12 @@ function scene0()
 
 function scene1()
 {
-
+    desiredplanepos = new THREE.Vector3(0,0,28);
+    if(desiredplanepos != videoplane.position)
+    {
+        const smoothpos = smoothvaluevec3(videoplane.position, desiredplanepos, 10);
+        videoplane.position.set(smoothpos.x, smoothpos.y, smoothpos.z);
+    }
 }
 
 function animate() {
