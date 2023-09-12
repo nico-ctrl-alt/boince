@@ -170,7 +170,8 @@ button0.addEventListener('click', () => {change0();});
 function change0()
 { 
   if(sceneint == 0)
-  {timer = 300; console.log('change0 function called')}; 
+  {timer = 300; console.log('change0 function called');}
+  else {video.play()};
 }
 
 button0.addEventListener('mouseover', () => {
