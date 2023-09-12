@@ -188,9 +188,9 @@ function scene1()
         const smoothpos = smoothvaluevec3(videoplane.position, desiredplanepos, 10);
         videoplane.position.set(smoothpos.x, smoothpos.y, smoothpos.z);
         tvplane.position.set(smoothpos.x, smoothpos.y, smoothpos.z);
-        playbutton.position.set(smoothpos.x, smoothpos.y - 5, smoothpos.z);
-        ffbutton.position.set(smoothpos.x + 5, smoothpos.y - 5, smoothpos.z);
-        reversebutton.position.set(smoothpos.x - 5, smoothpos.y - 5, smoothpos.z);
+        playbutton.position.set(smoothpos.x, smoothpos.y - 2.3, smoothpos.z);
+        ffbutton.position.set(smoothpos.x + 2, smoothpos.y - 2, smoothpos.z);
+        reversebutton.position.set(smoothpos.x - 2, smoothpos.y - 2, smoothpos.z);
     }
 }
 
@@ -219,8 +219,7 @@ button0.addEventListener('click', () => {change0();});
 function change0()
 { 
   if(sceneint == 0)
-  {timer = 300; console.log('change0 function called');}
-  else {video.play()};
+  {timer = 300; console.log('change0 function called'); button0.hidden = true;}
 }
 
 button0.addEventListener('mouseover', () => {
