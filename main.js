@@ -22,20 +22,15 @@ let icoshover = 0;
 
 scene.add(icos);
 
-video = document.getElementById( 'video' );
-				video.play();
-				video.addEventListener( 'play', function () {
+const video = document.getElementById('video');
+video.preload = 'auto'; // Preload the video
 
-					this.currentTime = 3;
-
-				} );
-
-				texture = new THREE.VideoTexture( video );
-				texture.colorSpace = THREE.SRGBColorSpace;
+texture = new THREE.VideoTexture( video );
+texture.colorSpace = THREE.SRGBColorSpace;
 
 const planegeo = new THREE.PlaneGeometry(5, 2.5, 1, 1);
 
-const planematerial = new THREE.MeshBasicMaterial({color: 0xFFFFFF, map: texture });
+const planematerial = new THREE.MeshBasicMaterial({color: 0xFFFFFF map: texture });
 const videoplane = new THREE.Mesh(planegeo, planematerial);
 let desiredplanepos = new THREE.Vector3(0,0,0);
 
