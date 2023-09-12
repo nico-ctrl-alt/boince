@@ -25,12 +25,12 @@ scene.add(icos);
 const video = document.getElementById('video');
 video.preload = 'auto'; // Preload the video
 
-texture = new THREE.VideoTexture( video );
+const texture = new THREE.VideoTexture( video );
 texture.colorSpace = THREE.SRGBColorSpace;
 
-const planegeo = new THREE.PlaneGeometry(5, 2.5, 1, 1);
+const planegeo = new THREE.PlaneGeometry(5, 3.5, 1, 1);
 
-const planematerial = new THREE.MeshBasicMaterial({color: 0xFFFFFF map: texture });
+const planematerial = new THREE.MeshBasicMaterial({color: 0xFFFFFF, map: texture });
 const videoplane = new THREE.Mesh(planegeo, planematerial);
 let desiredplanepos = new THREE.Vector3(0,0,0);
 
@@ -137,7 +137,7 @@ function scene0()
 
 function scene1()
 {
-    desiredplanepos = new THREE.Vector3(0,0,28);
+    desiredplanepos = new THREE.Vector3(0,0,26.5);
     if(desiredplanepos != videoplane.position)
     {
         const smoothpos = smoothvaluevec3(videoplane.position, desiredplanepos, 10);
@@ -168,8 +168,9 @@ const button0 = document.getElementById('button0');
 button0.addEventListener('click', () => {change0();});
 
 function change0()
-{ timer = 300; console.log('change0 function called'); 
-button0.style.visibility = 'hidden';
+{ 
+  if(sceneint == 0)
+  {timer = 300; console.log('change0 function called')}; 
 }
 
 button0.addEventListener('mouseover', () => {
