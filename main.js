@@ -194,7 +194,6 @@ function scene1()
     {
       const scaling = smoothvalue(scale.x, targetValues[i], 10);
       buttons[i].scale.set(scaling, scaling, scaling);
-      console.log(scale);
     }
   }
 
@@ -265,9 +264,9 @@ fastforward.addEventListener('mousedown', () => {
 video.playbackRate += .1;
 });
 
-const reverseb = document.getElementById('reverse');
+const reverseb = document.getElementById('reverseb');
 reverseb.addEventListener('mousedown', () => {
-  video.playbackRate += .1;
+  video.playbackRate = -1;
   });
 
 playpause.addEventListener('mouseover', () => {playhover = 1.5;});
