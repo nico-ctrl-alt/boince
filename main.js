@@ -261,12 +261,12 @@ function playpausevideo()
 
 const fastforward = document.getElementById('fastforward');
 fastforward.addEventListener('mousedown', () => {
-video.playbackRate += .1;
+video.playbackRate += .3;
 });
 
 const reverseb = document.getElementById('reverseb');
 reverseb.addEventListener('mousedown', () => {
-  video.playbackRate = -1;
+  video.playbackRate -= .3;
   });
 
 playpause.addEventListener('mouseover', () => {playhover = 1.5;});
