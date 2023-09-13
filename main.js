@@ -78,6 +78,9 @@ const playgeo = new THREE.PlaneGeometry(1,1);
 const playbutton = new THREE.Mesh(playgeo, playmat);
 const ffbutton = new THREE.Mesh(playgeo.clone(), ffmat);
 const reversebutton = new THREE.Mesh(playgeo.clone(), reversemat);
+let playhover = 1;
+let ffhover = 1;
+let reversehover = 1;
 
 scene.add(videoplane, tvplane, playbutton, ffbutton, reversebutton);
 
@@ -182,16 +185,30 @@ function scene0()
 
 function scene1()
 {
-    desiredplanepos = new THREE.Vector3(0,0,26.5);
+  const buttons = [playbutton, ffbutton, reversebutton];
+  const targetValues = [playhover, ffhover, reversehover];
+  for(let i = 0; i < buttons.length; i++)
+  {
+    const scale = buttons[i].scale;
+    if(buttons[i].scale != new THREE.Vector3(1, 1, 1) * targetValues[i])
+    {
+      const scaling = smoothvalue(scale.x, targetValues[i], 10);
+      buttons[i].scale.set(scaling, scaling, scaling);
+      console.log(scale);
+    }
+  }
+
+  desiredplanepos = new THREE.Vector3(0,0,26.5);
     if(desiredplanepos != videoplane.position)
     {
         const smoothpos = smoothvaluevec3(videoplane.position, desiredplanepos, 10);
         videoplane.position.set(smoothpos.x, smoothpos.y, smoothpos.z);
         tvplane.position.set(smoothpos.x, smoothpos.y, smoothpos.z);
-        playbutton.position.set(smoothpos.x, smoothpos.y - 2.3, smoothpos.z);
-        ffbutton.position.set(smoothpos.x + 2, smoothpos.y - 2, smoothpos.z);
-        reversebutton.position.set(smoothpos.x - 2, smoothpos.y - 2, smoothpos.z);
+        playbutton.position.set(smoothpos.x, smoothpos.y-2.2, smoothpos.z);
+        ffbutton.position.set(smoothpos.x+2, smoothpos.y-2, smoothpos.z);
+        reversebutton.position.set(smoothpos.x-2, smoothpos.y-2, smoothpos.z);
     }
+
 }
 
 function animate() {
@@ -231,5 +248,33 @@ button0.addEventListener('mouseout', () => {
   icoshover = 0;
   console.log('nah');
 });
+
+const playpause = document.getElementById('playpause');
+playpause.addEventListener('click', () => {playpausevideo()})
+
+function playpausevideo()
+{
+  if(video.paused)
+  video.play();
+  else
+  video.pause();
+}
+
+const fastforward = document.getElementById('fastforward');
+fastforward.addEventListener('mousedown', () => {
+video.playbackRate += .1;
+});
+
+const reverseb = document.getElementById('reverse');
+reverseb.addEventListener('mousedown', () => {
+  video.playbackRate += .1;
+  });
+
+playpause.addEventListener('mouseover', () => {playhover = 1.5;});
+playpause.addEventListener('mouseout', () => {playhover = 1;});
+fastforward.addEventListener('mouseover', () => {ffhover = 1.5;});
+fastforward.addEventListener('mouseout', () => {ffhover = 1;});
+reverseb.addEventListener('mouseover', () => {reversehover = 1.5;});
+reverseb.addEventListener('mouseout', () => {reversehover = 1;});
 
 
